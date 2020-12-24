@@ -1,113 +1,38 @@
 import 'package:flutter/material.dart';
-
-import './quiz.dart';
-import './result.dart';
+import 'package:hello_flutter/widgets/user_transactions.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  final _questions = const [
-    {
-      'questionText': 'what\'s your favorite color?',
-      'answers': [
-        {
-          'text': 'black',
-          'score': 10,
-        },
-        {
-          'text': 'red',
-          'score': 6,
-        },
-        {
-          'text': 'green',
-          'score': 3,
-        },
-        {
-          'text': 'white',
-          'score': 1,
-        },
-      ],
-    },
-    {
-      'questionText': 'what\'s your favorite animal',
-      'answers': [
-        {
-          'text': 'cat',
-          'score': 10,
-        },
-        {
-          'text': 'dog',
-          'score': 8,
-        },
-        {
-          'text': 'cow',
-          'score': 5,
-        },
-        {
-          'text': 'ant',
-          'score': 1,
-        },
-      ],
-    },
-    {
-      'questionText': 'who\'s your favorite instructor?',
-      'answers': [
-        {
-          'text': 'she',
-          'score': 10,
-        },
-        {
-          'text': 'he',
-          'score': 8,
-        },
-        {
-          'text': 'them',
-          'score': 5,
-        },
-        {
-          'text': 'all',
-          'score': 1,
-        },
-      ],
-    },
-  ];
-  var _questionIndex = 0;
-  var _totalScore = 0;
-  void _resetQuiz() {
-    setState(() {
-      _questionIndex = 0;
-      _totalScore = 0;
-    });
-  }
-
-  void _answerQuestion(int score) {
-    _totalScore += score;
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('First Flutter App'),
+      title: 'Flutter App',
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter App'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              child: Card(
+                child: Text('Chart'),
+              ),
+            ),
+            UserTransactions()
+          ],
         ),
-        body: _questionIndex < _questions.length
-            ? Quiz(
-                answerQuestion: _answerQuestion,
-                questionIndex: _questionIndex,
-                questions: _questions,
-              )
-            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
